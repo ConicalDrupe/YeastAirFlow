@@ -25,9 +25,12 @@ Created on Tue Feb 14 10:29:57 2023
 
 #%%
 import pandas as pd
-directory = r"/home/boon/Python/AirFlowTest/"
+# directory to read weekly logs from
+read_directory = r"/home/boon/Python/AirFlowTest/"
+# directory to save master in
+master_directory = r"/home/boon/Python/AirFlowTest/"
 
-data = pd.read_excel(directory + "sample_date.xlsx")
+data = pd.read_excel(read_directory + "sample_date.xlsx")
 
 # Fix datatypes
 data['Focuser'] = data['Focuser'].fillna('')
@@ -79,13 +82,13 @@ data = data[['Date','names','groupID','Species','Pictures Taken']]
 # Transfer to master file
 
 # Read master file that already exists
-temp = pd.read_excel(directory + "org_master_sample.xlsx")
+temp = pd.read_excel(master_directory + "org_master_sample.xlsx")
 
 # Create new master data fram
 new_master = pd.concat([temp,data])
 
 # Create excel file of temp_master and new master
-temp.to_excel(directory + "temp_master.xlsx" , index=False)
+temp.to_excel(master_directory + "temp_master.xlsx" , index=False)
  #In practice org_master_xlsx would be names the same as master.xlsx
-new_master.to_excel(directory + "master.xlsx" , index=False)
+new_master.to_excel(master_directory + "master.xlsx" , index=False)
 

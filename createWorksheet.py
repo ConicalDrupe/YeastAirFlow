@@ -5,20 +5,24 @@ Created on Tue Feb 14 10:02:12 2023
 
 @author: boon
 """
-# DONE WEEKLY ON MONDAY
+# DONE WEEKLY ON FRIDAY (After master append)
 
 import xlsxwriter
 from datetime import datetime, timedelta
 
-# Create filename - cannot be done at 00:00
+# Directory to save
+directory = r"/home/boon/Python/AirFlowTest/"
+
+
+# Create filename for next monday - cannot be done at 00:00
 now = datetime.now()
-monday = now - timedelta(days = now.weekday())
-monday_str = monday.date().strftime("%m-%d-%Y")
-filename = monday_str + ".xlsx"
+next_monday = now + timedelta(days = 3)
+next_monday_str = next_monday.date().strftime("%m-%d-%Y")
+filename = next_monday_str + ".xlsx"
 
 
-
-workbook = xlsxwriter.Workbook(filename)
+# Create workbook in directory with filename
+workbook = xlsxwriter.Workbook(directory + filename)
 worksheet = workbook.add_worksheet()
 
 # Create formats
