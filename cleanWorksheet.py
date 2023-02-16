@@ -43,10 +43,11 @@ for x in people:
     people_perm.append(x)
 
 # generating keys for our dictionary groupings
-keys = range(1,len(people_perm))
+keys = range(len(people_perm))
 groupings = dict(zip(people_perm,keys))
 
-# Add New column groupid
+
+# Add New column groupid and map groupings
 data['groupID'] = data['names'].map(groupings)
 
 if data['groupID'].isnull().values.any() == True:
