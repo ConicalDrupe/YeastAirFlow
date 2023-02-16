@@ -8,23 +8,9 @@ Created on Tue Feb 14 10:29:57 2023
 
 ## DONE ON FRIDAY NIGHT
 
-#import pandas as pd
-#from datetime import datetime, timedelta
-
-# Create filename - cannot be done at 00:00
-
-#now = datetime.now()
-#monday = now - timedelta(days = now.weekday())
-#monday_str = monday.date().strftime("%m-%d-%Y")
-#filename = monday_str + ".xlsx"
-
-# For Network storage, we must interact with API here
-
-#filepath = "/home/boon/Python/AirFlowTest/"
-#data = pd.read_excel(filepath + filename)
-
-#%%
 import pandas as pd
+from itertools import permutations
+
 # directory to read weekly logs from
 read_directory = r"/home/boon/Python/AirFlowTest/"
 # directory to save master in
@@ -41,27 +27,24 @@ data['names'] = data['Photographer'] + " " + data['Focuser']
     # Removes trailing whitespace
 data['names'] = data['names'].str.rstrip()
 
+#%%
 # Defining dictionary for mapping
 
-#people = ["Jan","Christopher","Chelbie","Katie","Jessica","Aurora"]
-# Try Combination list method to generate dic...
+people = ["Jan","Christopher","Chelbie","Katie","Jessica","Aura"]
+# generates all pairwise combinations of people
+people_perm = list(permutations(people, 2))
 
-groupings = {
-    "Jan Chistopher": 1,
-    "Christopher Jan": 2,
-    "Jan Aurora": 3,
-    "Aurora Jan": 4,
-    "Katie Chelbie": 5,
-    "Chelbie Katie": 6,
-    "Jessica Jan": 7,
-    "Jan Jessica": 8,
-    "Jan" : 9,
-    "Jessica": 10,
-    "Christopher": 11, 
-    "Chelbie": 12,
-    "Katie": 13,
-    "Aurora": 14
-    }
+# 
+for count, group in enumerate(people_perm):
+    people_perm[count] = ' '.join(group)
+
+    # append solo group     
+for x in people:    
+    people_perm.append(x)
+
+# generating keys for our dictionary groupings
+keys = range(1,len(people_perm))
+groupings = dict(zip(people_perm,keys))
 
 # Add New column groupid
 data['groupID'] = data['names'].map(groupings)
